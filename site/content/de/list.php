@@ -20,15 +20,15 @@
 					$wish .= '<tr bgcolor="#dddddd">';
 				}
 				$wish .= '<td style="padding: 5px 8px 5px 8px;"><div align="right"><b>' . ($key + 1) . '.</b></div></td>';
-				$wish .= '<td style="padding: 5px 8px 5px 8px;">' . htmlentities(utf8_decode($value['track']['name'])) . '</td>';
+				$wish .= '<td style="padding: 5px 8px 5px 8px;">' . htmlentities($value['track']['name']) . '</td>';
 				$wish .= '<td style="padding: 5px 8px 5px 8px;">';
 				$first = true;
 				foreach($value['track']['artists'] as $artist) {
 					if ($first) {
-						$wish .= '<i>' . htmlentities(utf8_decode($artist['name'])) . '</i>';
+						$wish .= '<i>' . htmlentities($artist['name']) . '</i>';
 						$first = false;
 					} else {
-						$wish .= ', <i>' . htmlentities(utf8_decode($artist['name'])) . '</i>';
+						$wish .= ', <i>' . htmlentities($artist['name']) . '</i>';
 					}
 				}
 				$wish .= '</td>';

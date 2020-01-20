@@ -5,15 +5,15 @@
 	$song = spotify_getsong();
 	$track = '--- NICHTS ---';
 	if (($song !== false) and (isset($song['item']))) {
-		$track = htmlentities(utf8_decode($song['item']['name'])) . '<br>';
+		$track = htmlentities($song['item']['name']) . '<br>';
 		$first = true;
 		
 		foreach ($song['item']['artists'] as $artist) {
 			if ($first) {
-				$track .= '<i>' . htmlentities(utf8_decode($artist['name'])) . '</i>';
+				$track .= '<i>' . htmlentities($artist['name']) . '</i>';
 				$first = false;
 			} else {
-				$track .= ', <i>' . htmlentities(utf8_decode($artist['name'])) . '</i>';
+				$track .= ', <i>' . htmlentities($artist['name']) . '</i>';
 			}
 		}
 	}

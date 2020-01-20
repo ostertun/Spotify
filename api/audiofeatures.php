@@ -29,7 +29,7 @@
 	}
 	
 	if ($features !== false) {
-		echo '<b>' . htmlentities(utf8_decode($trackname)) . '</b><br>';
+		echo '<b>' . htmlentities($trackname) . '</b><br>';
 		echo 'Tonart: ' . $keys[$features['key']] . ' ';
 		if ($features['mode']) {
 			echo 'Dur<br>';
