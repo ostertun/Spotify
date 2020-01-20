@@ -31,7 +31,7 @@
 	);
 	
 	function module_current($site) {
-		echo '<iframe src="/api/current.php" scrolling="no" style="border: 0;" onload="resizeIframe(this)"></iframe>';
+		echo '<iframe src="' . SERVER_ADDR . '/api/current.php" scrolling="no" style="border: 0;" onload="resizeIframe(this)"></iframe>';
 	}
 	
 ?>

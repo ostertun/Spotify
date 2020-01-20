@@ -3,3 +3,4 @@ server/server/const.php
 api/accesstoken
 site/server/const.php
 site/server/blacklists/*
+.htaccess

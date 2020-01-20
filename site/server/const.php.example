@@ -8,6 +8,12 @@
 	define('PARTY_CODE', 'party-code');   // Nötig, um die Website als Gast zu sehen - Wünsche möglich
 	define('ADMIN_CODE', 'party-admin');  // Admin Code - Kann zusätzlich die Blacklist bearbeiten und Wünsche löschen
 	
+	// Username
+	/*
+	 * Enter here your spotify username
+	 */
+	define('SP_USERNAME', 'ca***j');
+	
 	// Playlist IDs
 	/*
 	 * Erstelle vier Playlists in deinem Spotify Konto

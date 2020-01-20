@@ -2,27 +2,8 @@
 	
 	require_once(dirname(__FILE__) . '/../../api/access.php');
 	
-	$interpreten = array();
-	$file = fopen(dirname(__FILE__) . '/blacklists/interpreten', 'r');
-	if ($file) {
-		while (($line = fgets($file)) !== false) {
-			$line = substr($line, 0, strlen($line) - 1);
-			$interpret = explode("\t", $line, 2);
-			$interpreten[$interpret[0]] = $interpret;
-		}
-		fclose($file);
-	}
-	
-	$tracks = array();
-	$file = fopen(dirname(__FILE__) . '/blacklists/tracks', 'r');
-	if ($file) {
-		while (($line = fgets($file)) !== false) {
-			$line = substr($line, 0, strlen($line) - 1);
-			$track = explode("\t", $line, 4);
-			$tracks[$track[0]] = $track;
-		}
-		fclose($file);
-	}
+	$interpreten = getBlacklistedInterprets();
+	$tracks = getBlacklistedTracks();
 	
 	$redirect = '';
 	
@@ -39,37 +20,20 @@
 		
 		case 'wish':
 			if (isset($request[0])) {
-				if (isset($tracks[$request[0]])) {
-					fail('Dieser Song wurde vom Veranstalter blockiert.');
-				} else {
-					$ch = curl_init();
-					curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/tracks/" . urlencode($request[0]));
-					$response = curl_exec_access_token($ch);
-					if (isset($response['id'])) {
-						$ok = true;
-						foreach($response['artists'] as $artist) {
-							if (isset($interpreten[$artist['id']])) {
-								$ok = false;
-								break;
-							}
-						}
-						if ($ok) {
-							if (inPlaylist('cagrrj', PL_WISH, $request[0])) {
-								fail('Dieser Song befindet sich bereits in der Wunschliste.');
-							} else {
-								if (spotify_add('cagrrj', PL_WISH, $request[0])) {
-									spotify_add('cagrrj', PL_SAVED, $request[0]);
-									success(SUC);
-								} else {
-									fail(STRING_UNKNOWN_ERR);
-								}
-							}
-						} else {
-							fail('Dieser Song wurde vom Veranstalter blockiert.');
-						}
-					} else {
+				switch (wish($request[0])) {
+					case 0:
+						success(SUC);
+						break;
+					case 1:
+						fail('Dieser Song wurde vom Veranstalter blockiert.');
+						break;
+					case 2:
+						fail('Dieser Song befindet sich bereits in der Wunschliste.');
+						break;
+					case 3:
+					default:
 						fail(STRING_UNKNOWN_ERR);
-					}
+						break;
 				}
 			} else {
 				fail(STRING_INVALID_REQUEST);
@@ -87,7 +51,7 @@
 						
 						// *** REMOVE ALL TRACKS WITH THIS INTERPRET
 						$ch = curl_init();
-						curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/users/cagrrj/playlists/" . PL_WISH . "/tracks");
+						curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/users/" . SP_USERNAME . "/playlists/" . PL_WISH . "/tracks");
 						$response2 = curl_exec_access_token($ch);
 						if (isset($response2['items'])) {
 							foreach ($response2['items'] as $key => $value) {
@@ -99,7 +63,7 @@
 									}
 								}
 								if (!$ok) {
-									spotify_remove('cagrrj', PL_WISH, $value['track']['id']);
+									spotify_remove(SP_USERNAME, PL_WISH, $value['track']['id']);
 								}
 							}
 						}
@@ -156,7 +120,7 @@
 							}
 						}
 						file_put_contents('site/server/blacklists/tracks', $response['id'] . "\t" . $response['name'] . "\t" . $art . "\t" . $response['album']['name'] . "\n", FILE_APPEND);
-						spotify_remove('cagrrj', PL_WISH, $response['id']);
+						spotify_remove(SP_USERNAME, PL_WISH, $response['id']);
 						success(SUC);
 					} else {
 						fail(STRING_INVALID_REQUEST);

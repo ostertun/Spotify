@@ -1,5 +1,6 @@
 <?php
 	
+	require_once('server/server/const.php');
 	require_once('site/server/const.php');
 	
 ?>
@@ -31,8 +32,8 @@
 			</tr>
 		</table>
 		<hr>
-		<iframe src="/api/currentinfo.php?dark" scrolling="no" style="border: 0; width: calc(100% - 4px);" onload="resizeIframe(this)"></iframe>
-		<iframe src="/api/wish5.php?dark" scrolling="no" style="border: 0; width: calc(100% - 4px);" onload="resizeIframe(this)"></iframe>
+		<iframe src="<?php echo SERVER_ADDR; ?>/api/currentinfo.php?dark" scrolling="no" style="border: 0; width: calc(100% - 4px);" onload="resizeIframe(this)"></iframe>
+		<iframe src="<?php echo SERVER_ADDR; ?>/api/wish5.php?dark" scrolling="no" style="border: 0; width: calc(100% - 4px);" onload="resizeIframe(this)"></iframe>
 	</body>
 	
 </html>

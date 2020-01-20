@@ -130,22 +130,41 @@
 		}
 	}
 	
-	function inPlaylist ($username, $playlist, $trackid, $offset=0) {
+	function getPlaylist($username, $playlist, $limit=-1, $offset=0) {
+		if ($limit < 0) {
+			$l = 100;
+		} else {
+			$l = min(100, $limit);
+		}
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/users/" . $username . "/playlists/" . $playlist . "/tracks?limit=100&offset=" . $offset);
+		curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/users/" . $username . "/playlists/" . $playlist . "/tracks?market=DE&limit=" . $l . "&offset=" . $offset);
 		$response = curl_exec_access_token($ch);
 		if (isset($response['error'])) {
 			return false;
 		} else {
 			if (isset($response['items'])) {
-				foreach ($response['items'] as $key => $value) {
-					if ($value['track']['id'] == $trackid) {
-						return true;
-					}
+				$tracks = array_values($response['items']);
+				$total = $response['total'];
+				if (($total > $offset + $l) and (($limit < 0) or ($limit > $l))) {
+					$newLimit = ($limit < 0) ? -1 : $limit - $l;
+					$newOffset = $offset + $l;
+					$rest = getPlaylist($username, $playlist, $newLimit, $newOffset);
+					return array_merge($tracks, $rest);
+				} else {
+					return $tracks;
 				}
 			}
-			if ($response['total'] > 99) {
-				return inPlaylist($user, $playlist, $trackid, $offset + $response['total']);
+		}
+		return false;
+	}
+	
+	function inPlaylist($username, $playlist, $trackid) {
+		$tracks = getPlaylist($username, $playlist);
+		if ($tracks !== false) {
+			foreach ($tracks as $key => $value) {
+				if ($value['track']['id'] == $trackid) {
+					return true;
+				}
 			}
 		}
 		return false;
