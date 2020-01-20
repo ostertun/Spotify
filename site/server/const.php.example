@@ -1,0 +1,26 @@
+<?php
+	
+	// Party-Name und Willkommens-Text
+	define('PARTY_NAME', 'Test-Party');
+	define('WELCOME_TEXT', 'Herzlich Willkommen auf der ' . PARTY_NAME . '!');
+	
+	// Party-Codes
+	define('PARTY_CODE', 'party-code');   // Nötig, um die Website als Gast zu sehen - Wünsche möglich
+	define('ADMIN_CODE', 'party-admin');  // Admin Code - Kann zusätzlich die Blacklist bearbeiten und Wünsche löschen
+	
+	// Playlist IDs
+	/*
+	 * Erstelle vier Playlists in deinem Spotify Konto
+	 *  - PL_WISH  : eine Playlist "Wunschliste"        - diese wird später auf einem Gerät abgespielt (ohne Shuffle und mit Wiederholung). Den Rest erledigt die Software
+	 *  - PL_WDW   : eine Playlist "Wünsch Dir Was"     - gemeinsame Playlist - hier kann jeder, der den Link bekommt, Wünsche hinzufügen. Der Song wird automatisch übernommen in die Wunschliste
+	 *  - PL_SAVED : eine Playlist "Gespeichert"        - hier werden alle Wünsche zusätzlich abgelegt. So lässt sich später nachvollziehen, was gespielt wurde
+	 *  - PL_POOL  : eine Playlist "Songpool"           - gefüllt mit vielen Liedern - Sollte sich niemand etwas wünschen wird automatisch ein zufälliger Song aus dieser Playlist gewünscht.
+	 *
+	 * Füge hier die Spotify Codes der Playlists ein (ohne das "spotify:playlist:")
+	 */
+	define('PL_WISH',  '7vAHN**************65c');  // Wunschliste - hier werden die gewünschten Songs hinzugefügt
+	define('PL_WDW',   '5h1xY**************Mxv');  // Wünsch Dir Was - hier hinzugefügte Songs werden automatisch in PL_WISH verschoben
+	define('PL_SAVED', '1i3Nd**************N9w');  // Alle Wünsche werden zusätzlich in diese Playlist kopiert - so lässt sich später einsehen, was gespielt wurde
+	define('PL_POOL',  '7A5WK**************hJW');  // Songpool - Sollten weniger als 3 Songs in PL_WISH sein, wird ein zufälliger Song aus dieser Playlist dorthin verschoben
+	
+?>
