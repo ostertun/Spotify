@@ -1,7 +1,7 @@
 <?php
 	
-	if (isset($_GET['send']) and ($_GET['send'] == 'true')) {
-		$content = "RewriteEngine On\nRewriteBase " . $_GET['path'] . "\n";
+	if (isset($_POST['send'])) {
+		$content = "RewriteEngine On\nRewriteBase " . $_POST['path'] . "\n";
 		$content .= "\n";
 		$content .= "### RESTRICTED FOLDER\n";
 		$content .= "RewriteRule ^(.*)const/server(.*)$ / [R=301,L,NC]\n";
@@ -36,9 +36,9 @@
 		
 		$content = "<?php\n";
 		$content .= "error_reporting(0);\n";
-		$content .= "define('SERVER_ADDR', 'https://" . $_SERVER['SERVER_NAME'] . $_GET['path'] . "');\n";
-		$content .= "define('CLIENT_ID', '$_GET[client_id]');\n";
-		$content .= "define('CLIENT_SECRET', '$_GET[client_secret]');\n";
+		$content .= "define('SERVER_ADDR', 'https://" . $_SERVER['SERVER_NAME'] . $_POST['path'] . "');\n";
+		$content .= "define('CLIENT_ID', '$_POST[client_id]');\n";
+		$content .= "define('CLIENT_SECRET', '$_POST[client_secret]');\n";
 		$content .= "define('REFRESH_TOKEN', '*** PASTE YOUR REFRESH_TOKEN HERE ***');\n";
 		$content .= "define('JQUERY_URL1', 'https://code.jquery.com/jquery-1.9.1.min.js');\n";
 		$content .= "define('JQUERY_URL2', 'https://code.jquery.com/ui/1.10.3/jquery-ui.js');\n";
@@ -55,13 +55,13 @@
 		$content .= "define('ADMIN_CODE', 'party-admin');  // Admin Code - Kann zusätzlich die Blacklist bearbeiten und Wünsche löschen\n";
 		$content .= "\n";
 		$content .= "// Username\n";
-		$content .= "define('SP_USERNAME', '$_GET[username]');\n";
+		$content .= "define('SP_USERNAME', '$_POST[username]');\n";
 		$content .= "\n";
 		$content .= "// Playlist IDs\n";
-		$content .= "define('PL_WISH',  '$_GET[pl_wish]');  // Wunschliste - hier werden die gewünschten Songs hinzugefügt\n";
-		$content .= "define('PL_WDW',   '$_GET[pl_wdw]');  // Wünsch Dir Was - hier hinzugefügte Songs werden automatisch in PL_WISH verschoben\n";
-		$content .= "define('PL_SAVED', '$_GET[pl_saved]');  // Alle Wünsche werden zusätzlich in diese Playlist kopiert - so lässt sich später einsehen, was gespielt wurde\n";
-		$content .= "define('PL_POOL',  '$_GET[pl_pool]');  // Songpool - Sollten weniger als 3(?) Songs in PL_WISH sein, wird ein zufälliger Song aus dieser Playlist dorthin verschoben\n";
+		$content .= "define('PL_WISH',  '$_POST[pl_wish]');  // Wunschliste - hier werden die gewünschten Songs hinzugefügt\n";
+		$content .= "define('PL_WDW',   '$_POST[pl_wdw]');  // Wünsch Dir Was - hier hinzugefügte Songs werden automatisch in PL_WISH verschoben\n";
+		$content .= "define('PL_SAVED', '$_POST[pl_saved]');  // Alle Wünsche werden zusätzlich in diese Playlist kopiert - so lässt sich später einsehen, was gespielt wurde\n";
+		$content .= "define('PL_POOL',  '$_POST[pl_pool]');  // Songpool - Sollten weniger als 3(?) Songs in PL_WISH sein, wird ein zufälliger Song aus dieser Playlist dorthin verschoben\n";
 		$content .= "?>\n";
 		file_put_contents(__DIR__ . '/site/server/const.php', $content);
 		
@@ -112,7 +112,7 @@
 				echo '<i>Track pool - if there are no wishes, a random song from here will be played</i></td>';
 			echo '</tr>';
 			echo '<tr>';
-				echo '<td colspan="2"><button>Einrichten</button></td>';
+				echo '<td colspan="2"><button name="send" value="true">Einrichten</button></td>';
 			echo '</tr>';
 		echo '</table></form>';
 	}

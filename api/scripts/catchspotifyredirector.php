@@ -6,9 +6,9 @@
 	 * Author: Lukas Westholt
 	 */
 	
-	$redirect_uri = strtok("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]", '?');
+	$redirect_uri = strtok("https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]", '?');
 	if (isset($_GET['send']) && $_GET['send'] == "true") {
-		require_once(__DIR__ . '/../api/access.php');
+		require_once(__DIR__ . '/../access.php');
 		
 		function sanitize($s) {
 			return htmlspecialchars($s);
@@ -23,7 +23,7 @@
 		exit;
 	}
 	if (isset($_GET['code'])) {
-		require_once(__DIR__ . '/../api/access.php');
+		require_once(__DIR__ . '/../access.php');
 		$code = $_GET['code'];
 		$authentication = base64_encode(CLIENT_ID . ":" . CLIENT_SECRET);
 		$ch = curl_init();
