@@ -4,3 +4,4 @@ api/accesstoken
 site/server/const.php
 site/server/blacklists/*
 .htaccess
+const/server/log.txt
