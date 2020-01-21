@@ -12,13 +12,13 @@
 	 *   get client_id and client_secret
 	 *   save both here in the corresponding php constants
 	 *
-	 * call this in a browser (you can use the log script in api/scripts to save the redirect request from spotify):
+	 * call this in a browser:
 	 *   https://accounts.spotify.com/authorize?client_id=*****&response_type=code&redirect_uri=https%3A%2F%2Fsandbox.ostertun.net&scope=user-read-playback-state+user-read-currently-playing+user-modify-playback-state+playlist-read-collaborative+playlist-modify-private+playlist-modify-public+playlist-read-private+streaming
 	 *   set the client id and redirect_uri
 	 *   redirect_uri must be whitelisted in developer.spotify.com (case sensitive etc - must be exactly the same)
 	 *  => you get an authorization code (AUTH_CODE)
 	 *
-	 * now call with curl or similar (you can use the auth script in api/scripts):
+	 * now call with curl or similar:
 	 *   https://accounts.spotify.com/api/token
 	 *     POST: 'grant_type=authorization_code&redirect_uri=https%3A%2F%2Fsandbox.ostertun.net&client_id=*****&client_secret=*****&code=AUTH_CODE'
 	 *   set redirect_uri, client_id, client_secret and AUTH_CODE
