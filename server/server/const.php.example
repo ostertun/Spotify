@@ -31,8 +31,8 @@
 	define('REFRESH_TOKEN', '**********');
 	
 // JQUERY NORMAL URL
-	define('JQUERY_URL1', 'http://code.jquery.com/jquery-1.9.1.min.js');
-	define('JQUERY_URL2', 'http://code.jquery.com/ui/1.10.3/jquery-ui.js');
+	define('JQUERY_URL1', 'https://code.jquery.com/jquery-1.9.1.min.js');
+	define('JQUERY_URL2', 'https://code.jquery.com/ui/1.10.3/jquery-ui.js');
 // JQUERY DOWNLOADED FOR XAMPP
 	//define('JQUERY_URL1', 'http://localhost/jquery/jquery-1.9.1.min.js');
 	//define('JQUERY_URL2', 'http://localhost/jquery/ui/1.10.3/jquery-ui.js');
