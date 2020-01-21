@@ -9,9 +9,6 @@
 <html lang="<?php echo LANG; ?>">
 	
 	<head>
-		<?php
-			require_once('server/server/pre.html');
-		?>
 		
 		<meta charset="utf-8" />
 		
@@ -20,8 +17,6 @@
 			if ($site == '') {
 				// Keine Seite angegeben -> Startseite
 				$sitename = STRING_TITLE_HOME;
-			} else if ($site == 'imprint') {
-				$sitename = STRING_IMPRINT_SHORT;
 			} else {
 				// Seite angegeben
 				if (isset($headings[$site])) {
@@ -223,7 +218,6 @@
 				
 				navoutput($nav, 'menu');
 			?>
-				<li><a href="<?php echo LINK_PRE; ?>imprint"><?php echo STRING_IMPRINT_SHORT; ?></a></li>
 				<li><input type="checkbox" name="menu" id="menu_lang" class="menu_chbox">
 					<label for="menu_lang"><a>Language</a></label><ul>
 						<?php
@@ -245,8 +239,6 @@
 					if ($site == '') {
 						// Keine Seite angegeben -> Startseite
 						include('site/content/' . LANG . '/index.php');
-					} else if ($site == 'imprint') {
-						include('const/server/imprint/' . LANG . '.php');
 					} else {
 						// Seite angegeben
 						if (isset($headings[$site])) {

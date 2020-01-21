@@ -5,25 +5,10 @@
 		Logging Support & Error Handling
 		--------------------------------
 		
-		Required defines:
-		- LOGGING_APIKEY (STRING)
-		- SEND_ERRORS (BOOL)
-		
 	*/
 	
 	function sendLog($type, $tag, $message) {
-		$c = curl_init();
-		curl_setopt($c, CURLOPT_URL, 'https://ostertun.net/logging/api.php?action=log');
-		curl_setopt($c, CURLOPT_POST, 1);
-		curl_setopt($c, CURLOPT_POSTFIELDS, 'apikey=' . urlencode(LOGGING_APIKEY) . '&type=' . urlencode($type) . '&tag=' . urlencode($tag) . '&message=' . urlencode($message));
-		curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-		$output = curl_exec($c);
-		curl_close($c);
-		$output = json_decode($output, true);
-		if (isset($output['error'])) {
-			file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/_log/' . date('Y-m-d') . '.log', date('H:i:s') . "\tsendLog\tFailed to log: " . $output['error'] . "\n", FILE_APPEND);
-		}
-		return isset($output['success']);
+		file_put_contents(__DIR__ . '/log.txt', date('Y-m-d H:i:s') . "\t" . $type . "\t" . $tag . "\t" . $message, FILE_APPEND);
 	}
 	
 	function logE($tag, $msg) {
@@ -93,8 +78,6 @@
 		logE($type, $errstr . ' in ' . $errfile . ' on line ' . $errline);
 		return false;
 	}
-	if (SEND_ERRORS) {
-		$alter_error_handler = set_error_handler('myErrorHandler');
-	}
+	$alter_error_handler = set_error_handler('myErrorHandler');
 	
 ?>

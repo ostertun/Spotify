@@ -9,9 +9,6 @@
 <html lang="<?php echo LANG; ?>">
 	
 	<head>
-		<?php
-			require_once('server/server/pre.html');
-		?>
 		
 		<meta charset="utf-8" />
 		
@@ -20,8 +17,6 @@
 			if ($site == '') {
 				// Keine Seite angegeben -> Startseite
 				$sitename = STRING_TITLE_HOME;
-			} else if ($site == 'imprint') {
-				$sitename = STRING_IMPRINT_SHORT;
 			} else {
 				// Seite angegeben
 				if (isset($headings[$site])) {
@@ -146,18 +141,6 @@
 				</a>
 			</div>
 			
-			<div id="headright">
-				<?php
-					
-					if (file_exists('site/content/' . LANG . '/contact.php')) {
-						echo '<a style="text-decoration: none; color: #ffffff;" href="' . LINK_PRE . 'contact">' . STRING_CONTACT . '</a> | ';
-					}
-					
-					echo '<a style="text-decoration: none; color: #ffffff;" href="' . LINK_PRE . 'imprint">' . STRING_IMPRINT_SHORT . '</a>';
-					
-				?>
-			</div>
-			
 		</div>
 		
 		<div id="nav">
@@ -188,8 +171,6 @@
 					if ($site == '') {
 						// Keine Seite angegeben -> Startseite
 						include('site/content/' . LANG . '/index.php');
-					} else if ($site == 'imprint') {
-						include('const/server/imprint/' . LANG . '.php');
 					} else {
 						// Seite angegeben
 						if (isset($headings[$site])) {
@@ -241,8 +222,6 @@
 					</td>
 					<td id="footright">
 						<?php
-							echo '<a href="' . LINK_PRE . 'imprint">' . STRING_IMPRINT . '</a>';
-							echo ' | ';
 							echo STRING_COPY;
 						?>
 					</td>

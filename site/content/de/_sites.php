@@ -1,7 +1,7 @@
 <?php
 	
 	$nav = array(
-		array(0, 'W&uuml;nsch Dir was!', 'wish'),
+		array(0, 'W&uuml;nsch Dir Was!', 'wish'),
 		array(0, 'Wunschliste', 'list')
 	);
 	
