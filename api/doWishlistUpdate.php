@@ -3,7 +3,7 @@
 	require_once(__DIR__ . '/access.php');
 	require_once(__DIR__ . '/../site/server/functions.php');
 	
-	// ### REMOVE CURRENT SONG FROM PL_WISH #########################################
+	// ### REMOVE CURRENT SONG FROM PL_WISH AND PL_POOL AND TRACK IT #########################################
 	
 	// *** GET CURRENT SONG ***
 	$track = spotify_getsong();
@@ -11,6 +11,10 @@
 		$trackid = $track['item']['id'];
 		// *** REMOVE SONG FROM PL_WISH ***
 		spotify_remove(SP_USERNAME, PL_WISH, $trackid);
+		// *** REMOVE SONG FROM PL_POOL ***
+		spotify_remove(SP_USERNAME, PL_POOL, $trackid);
+		// *** TRACK SONG ***
+		trackSong($trackid);
 	}
 	
 	// ### REMOVE UNPLAYABLE SONGS FROM PL_WISH #########################################
@@ -31,12 +35,14 @@
 	
 	// *** GET FIRST SONG FROM PL_WYW ***
 	$track = getPlaylist(SP_USERNAME, PL_WDW, 1);
-	if (($track !== false) and (count($track) == 1)) {
-		$trackid = $track[0]['track']['id'];
-		// *** ADD SONG TO PL_WISH AND PL_SAVED ***
-		wish($trackid);
-		// *** REMOVE SONG FROM PL_WYW ***
-		spotify_remove(SP_USERNAME, PL_WDW, $trackid);
+	if (($track !== false) and (count($track) > 0)) {
+		for ($i = 0; $i < count($track); $i ++) {
+			$trackid = $track[$i]['track']['id'];
+			// *** ADD SONG TO PL_WISH AND PL_SAVED ***
+			wish($trackid);
+			// *** REMOVE SONG FROM PL_WYW ***
+			spotify_remove(SP_USERNAME, PL_WDW, $trackid);
+		}
 	}
 	
 	// ### MOVE SONG FROM PL_POOL TO PL_WISH #########################################

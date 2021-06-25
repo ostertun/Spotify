@@ -35,7 +35,7 @@ RewriteRule ^(.*)site/content(.*)$ / [R=301,L,NC]
 ### CONTENT LOADER
 
 # Keep this subfolders untouched
-RewriteRule ^(api|display.php)($|/) - [L]
+RewriteRule ^(api|played|display.php)($|/) - [L]
 
 # Check if this looks like a mobile device
 RewriteCond %{HTTP:x-wap-profile} !^$ [OR]

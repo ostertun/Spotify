@@ -154,6 +154,16 @@
 			}
 			break;
 		
+		case 'clear_played':
+			if ($isAdmin) {
+				file_put_contents(__DIR__ . '/playlist/tracks', '');
+				$redirect = 'played';
+				success(SUC);
+			} else {
+				fail(STRING_INVALID_REQUEST);
+			}
+			break;
+		
 		default: // action not found
 			$redirect = null;
 			break;
