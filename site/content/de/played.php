@@ -12,7 +12,7 @@
 		echo '<a href="' . LINK_PRE . 'action/clear_played">Liste leeren</a><br>';
 	}
 ?>
-<b>Bisher gespielte Songs:</b><br>
+<a target="_blank" href="<?php echo SERVER_ADDR; ?>/played"><b>Bisher gespielte Songs:</b></a><br>
 <div class="overflow"><table border="0">
 <?php
 	$day = date('D, d.m.Y');

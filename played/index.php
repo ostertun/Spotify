@@ -42,7 +42,7 @@
 								$time = $track[4];
 								$coverUrl = $track[5];
 								$coverUrlSmall = count($track) > 6 ? $track[6] : $coverUrl;
-								if ($time < strtotime(date('Y-m-d'))) break;
+								if ($time < strtotime('-20 hours')) break;
 								echo '<article class="thumb">';
 								echo '<a href="' . $coverUrl . '" class="image"><img src="' . $coverUrlSmall . '" alt="" /></a>';
 								echo '<h2>' . date('H:i', $time) . ' ' . htmlentities($title, ENT_COMPAT, 'utf-8') . '</h2>';
