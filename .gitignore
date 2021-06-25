@@ -5,3 +5,4 @@ site/server/const.php
 site/server/blacklists/*
 .htaccess
 const/server/log.txt
+site/server/playlist

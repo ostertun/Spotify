@@ -70,7 +70,7 @@
 				$sizeSm = 1000000000000000;
 				$sizeLa = 0;
 				foreach($response['album']['images'] as $image) {
-					if ($image['height'] < $sizeSm) {
+					if (($image['height'] < $sizeSm) and ($image['height'] > 200)) {
 						$sizeSm = $image['height'];
 						$iconSm = $image['url'];
 					}
@@ -79,7 +79,7 @@
 						$iconLa = $image['url'];
 					}
 				}
-				file_put_contents(__DIR__ . '/playlist/tracks', $response['id'] . "\t" . $response['name'] . "\t" . $art . "\t" . $response['album']['name'] . "\t" . time() . (isset($iconLa) ? "\t" . $iconLa . "\t" . $iconSm : '') . "\n", FILE_APPEND);
+				file_put_contents(__DIR__ . '/playlist/tracks', $response['id'] . "\t" . $response['name'] . "\t" . $art . "\t" . $response['album']['name'] . "\t" . time() . (isset($iconLa) ? "\t" . $iconLa . (isset($iconSm) ? "\t" . $iconSm : '') : '') . "\n", FILE_APPEND);
 			}
 		}
 	}
