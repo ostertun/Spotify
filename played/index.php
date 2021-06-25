@@ -30,6 +30,7 @@
 				<!-- Main -->
 					<div id="main">
 						<?php
+							date_default_timezone_set('Europe/Berlin');
 							$file = file_get_contents(__DIR__ . '/../site/server/playlist/tracks');
 							$tracks = array_reverse(explode("\n", $file));
 							foreach ($tracks as $track) {
