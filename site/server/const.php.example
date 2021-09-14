@@ -8,6 +8,8 @@
 	define('PARTY_CODE', 'party-code');   // Nötig, um die Website als Gast zu sehen - Wünsche möglich
 	define('ADMIN_CODE', 'party-admin');  // Admin Code - Kann zusätzlich die Blacklist bearbeiten und Wünsche löschen
 	
+	define('ADDITIONAL_INFO', '');  // Wird auf display.php angezeigt
+	
 	// Username
 	/*
 	 * Enter here your spotify username
