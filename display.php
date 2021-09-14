@@ -25,7 +25,7 @@
 				<td style="width: 50%;" rowspan="3"><div align="center"><img style="/*height: 20vh;*/ width: 100%; box-shadow: 0 0 5px 2px white;" src="spcode.svg" /></div></td>
 			</tr>
 			<tr>
-				<td><div align="center">W&uuml;nsch Dir was unter <?php echo SERVER_ADDR; ?><br>Party-Code: <?php echo PARTY_CODE; ?></div></td>
+				<td><div align="center">W&uuml;nsch Dir was unter <?php echo SERVER_ADDR; ?><br>Party-Code: <?php echo PARTY_CODE; ?><br><?php echo ADDITIONAL_INFO; ?></div></td>
 			</tr>
 			<tr>
 				<td><div align="center">Oder f&uuml;ge Deinen Wunsch einfach dieser Playlist hinzu:</div></td>
