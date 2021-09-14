@@ -3,7 +3,7 @@
 	$nav = array(
 		array(0, 'W&uuml;nsch Dir Was!', 'wish'),
 		array(0, 'Wunschliste', 'list'),
-		array(0, 'Bisher gespielt', 'played')
+		array(0, 'Bisher gespielt', '../played')
 	);
 	
 	if ($isAdmin) {
