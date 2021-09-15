@@ -1,11 +1,11 @@
 <?php
-	
+
 	require_once(dirname(__FILE__) . '/access.php');
-	
+
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/users/cagrrj/playlists/" . PL_WISH . "/tracks?limit=5");
 	$response = curl_exec_access_token($ch);
-	
+
 	$wish = '';
 	if (isset($response['error'])) {
 		$wish = 'Error ' . $response['error']['status'] . ': ' . $response['error']['message'];

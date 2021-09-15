@@ -1,5 +1,5 @@
 <?php
-	
+
 	function getBlacklistedInterprets() {
 		$interpreten = array();
 		$file = fopen(dirname(__FILE__) . '/blacklists/interpreten', 'r');
@@ -13,7 +13,7 @@
 		}
 		return $interpreten;
 	}
-	
+
 	function getBlacklistedTracks() {
 		$tracks = array();
 		$file = fopen(dirname(__FILE__) . '/blacklists/tracks', 'r');
@@ -27,7 +27,7 @@
 		}
 		return $tracks;
 	}
-	
+
 	function getPlayedSongs() {
 		$tracks = array();
 		$file = fopen(dirname(__FILE__) . '/playlist/tracks', 'r');
@@ -47,12 +47,12 @@
 		}
 		return $tracks;
 	}
-	
+
 	function trackSong($id) {
 		$lastCurrent = file_get_contents(__DIR__ . '/playlist/current');
 		if ($id != $lastCurrent) {
 			file_put_contents(__DIR__ . '/playlist/current', $id);
-			
+
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/tracks/" . urlencode($id));
 			$response = curl_exec_access_token($ch);
@@ -83,7 +83,7 @@
 			}
 		}
 	}
-	
+
 	/**
 	 * return 0: ok
 	 * return 1: black listed
@@ -93,7 +93,7 @@
 	function wish($track_id) {
 		$interpreten = getBlacklistedInterprets();
 		$tracks = getBlacklistedTracks();
-		
+
 		if (isset($tracks[$track_id])) {
 			return 1;
 		} else {
@@ -112,7 +112,7 @@
 					if (inPlaylist('cagrrj', PL_WISH, $track_id)) {
 						return 2;
 					} else {
-						if (spotify_add(SP_USERNAME, PL_WISH, $track_id)) {
+						if (spotify_add2queue($track_id)) {
 							spotify_add(SP_USERNAME, PL_SAVED, $track_id);
 							return 0;
 						} else {
@@ -127,5 +127,5 @@
 			}
 		}
 	}
-	
+
 ?>
