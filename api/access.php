@@ -142,14 +142,14 @@
 		}
 	}
 
-	function getPlaylist($username, $playlist, $limit=-1, $offset=0) {
+	function getPlaylist($username, $playlist, $limit=-1, $offset=0, $market=false) {
 		if ($limit < 0) {
 			$l = 100;
 		} else {
 			$l = min(100, $limit);
 		}
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/users/" . $username . "/playlists/" . $playlist . "/tracks?market=DE&limit=" . $l . "&offset=" . $offset);
+		curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/users/" . $username . "/playlists/" . $playlist . "/tracks?" . ($market ? 'market=DE&' : '') . "limit=" . $l . "&offset=" . $offset);
 		$response = curl_exec_access_token($ch);
 		if (isset($response['error'])) {
 			return false;
