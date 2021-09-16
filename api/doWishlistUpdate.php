@@ -51,14 +51,23 @@
 	$tracks = getPlaylist(SP_USERNAME, PL_WISH, 3);
 	if (($tracks !== false) and (count($tracks) < 3)) {
 		// *** GET RANDOM SONG FROM PL_POOL ***
-		$tracks = getPlaylist(SP_USERNAME, PL_POOL);
+		$tracks = getPlaylist(SP_USERNAME, PL_POOL, -1, 0, true);
 		if (($tracks !== false) and (count($tracks) > 0)) {
 			$i = random_int(0, count($tracks) - 1);
-			$trackid = $tracks[$i]['track']['id'];
-			// *** ADD SONG TO PL_WISH AND PL_SAVED ***
-			wish($trackid);
-			// *** REMOVE SONG FROM PL_POOL ***
-			spotify_remove(SP_USERNAME, PL_POOL, $trackid);
+			if ($tracks[$i]['track']['is_local']) {
+				// TODO: is a local song, not removable
+			} else {
+				$trackid = $tracks[$i]['track']['id'];
+				if ($tracks[$i]['track']['is_playable']) {
+					// *** ADD SONG TO PL_WISH AND PL_SAVED ***
+					wish($trackid);
+				}
+				if (isset($tracks[$i]['track']['linked_from'])) {
+					$trackid = $tracks[$i]['track']['linked_from']['id'];
+				}
+				// *** REMOVE SONG FROM PL_POOL ***
+				spotify_remove(SP_USERNAME, PL_POOL, $trackid);
+			}
 		}
 	}
 
