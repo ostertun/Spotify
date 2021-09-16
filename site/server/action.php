@@ -1,14 +1,14 @@
 <?php
-	
+
 	require_once(dirname(__FILE__) . '/../../api/access.php');
-	
+
 	$interpreten = getBlacklistedInterprets();
 	$tracks = getBlacklistedTracks();
-	
+
 	$redirect = '';
-	
+
 	switch(ACTION) {
-		
+
 		case 'entercode':
 			if (isset($_POST['partycode']) and (($_POST['partycode'] == PARTY_CODE) or ($_POST['partycode'] == ADMIN_CODE))) {
 				setcookie('partycode', $_POST['partycode'], time() + 10 * 60 * 60, '/'); // 10h
@@ -17,7 +17,7 @@
 				$redirect = 'entercode';
 			}
 			break;
-		
+
 		case 'wish':
 			if (isset($request[0])) {
 				switch (wish($request[0])) {
@@ -31,6 +31,9 @@
 						fail('Dieser Song befindet sich bereits in der Wunschliste.');
 						break;
 					case 3:
+						fail('Dieser Song ist leider nicht in Deutschland spielbar.');
+						break;
+					case 4:
 					default:
 						fail(STRING_UNKNOWN_ERR);
 						break;
@@ -39,7 +42,7 @@
 				fail(STRING_INVALID_REQUEST);
 			}
 			break;
-		
+
 		case 'black_lock_int':
 			if (isset($request[0]) and ($isAdmin)) {
 				if (!isset($interpreten[$request[0]])) {
@@ -48,7 +51,7 @@
 					$response = curl_exec_access_token($ch);
 					if (isset($response['id'])) {
 						file_put_contents('site/server/blacklists/interpreten', $response['id'] . "\t" . $response['name'] . "\n", FILE_APPEND);
-						
+
 						// *** REMOVE ALL TRACKS WITH THIS INTERPRET
 						$ch = curl_init();
 						curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/users/" . SP_USERNAME . "/playlists/" . PL_WISH . "/tracks");
@@ -68,7 +71,7 @@
 							}
 						}
 						// *** END OF REMOVE
-						
+
 						success(SUC);
 					} else {
 						fail(STRING_INVALID_REQUEST);
@@ -81,7 +84,7 @@
 				fail(STRING_INVALID_REQUEST);
 			}
 			break;
-		
+
 		case 'black_unlock_int':
 			if (isset($request[0]) and ($isAdmin)) {
 				if (isset($interpreten[$request[0]])) {
@@ -101,7 +104,7 @@
 				fail(STRING_INVALID_REQUEST);
 			}
 			break;
-		
+
 		case 'black_lock_tra':
 			if (isset($request[0]) and ($isAdmin)) {
 				if (!isset($tracks[$request[0]])) {
@@ -133,7 +136,7 @@
 				fail(STRING_INVALID_REQUEST);
 			}
 			break;
-		
+
 		case 'black_unlock_tra':
 			if (isset($request[0]) and ($isAdmin)) {
 				if (isset($tracks[$request[0]])) {
@@ -153,7 +156,7 @@
 				fail(STRING_INVALID_REQUEST);
 			}
 			break;
-		
+
 		case 'clear_played':
 			if ($isAdmin) {
 				file_put_contents(__DIR__ . '/playlist/tracks', '');
@@ -163,11 +166,11 @@
 				fail(STRING_INVALID_REQUEST);
 			}
 			break;
-		
+
 		default: // action not found
 			$redirect = null;
 			break;
-		
+
 	}
-	
+
 ?>

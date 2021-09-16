@@ -88,7 +88,8 @@
 	 * return 0: ok
 	 * return 1: black listed
 	 * return 2: already wished
-	 * return 3: unkown error
+	 * return 3: unplayable song
+	 * return 4: unkown error
 	 */
 	function wish($track_id) {
 		$interpreten = getBlacklistedInterprets();
@@ -98,8 +99,9 @@
 			return 1;
 		} else {
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/tracks/" . urlencode($track_id));
+			curl_setopt($ch, CURLOPT_URL, "https://api.spotify.com/v1/tracks/" . urlencode($track_id) . "?market=DE");
 			$response = curl_exec_access_token($ch);
+			if (!$response['is_playable']) return 3;
 			if (isset($response['id'])) {
 				$ok = true;
 				foreach($response['artists'] as $artist) {
@@ -116,14 +118,14 @@
 							spotify_add(SP_USERNAME, PL_SAVED, $track_id);
 							return 0;
 						} else {
-							return 3;
+							return 4;
 						}
 					}
 				} else {
 					return 1;
 				}
 			} else {
-				return 3;
+				return 4;
 			}
 		}
 	}
