@@ -103,6 +103,7 @@
 			$response = curl_exec_access_token($ch);
 			if (!$response['is_playable']) return 3;
 			if (isset($response['id'])) {
+				if (isset($tracks[$response['id']])) return 1;
 				$ok = true;
 				foreach($response['artists'] as $artist) {
 					if (isset($interpreten[$artist['id']])) {
