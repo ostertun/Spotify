@@ -60,11 +60,7 @@
 				$trackid = $tracks[$i]['track']['id'];
 				if ($tracks[$i]['track']['is_playable']) {
 					// *** ADD SONG TO PL_WISH AND PL_SAVED ***
-					$result = wish($trackid);
-					if ($result != 0)
-						file_put_contents(__DIR__ . '/cron.log', "wish returned $result\t$trackid\t" . $tracks[$i]['track']['name'] . "\t" . json_encode($tracks[$i]['track']) . "\n", FILE_APPEND);
-				} else {
-					file_put_contents(__DIR__ . '/cron.log', "unplayable\t$trackid\t" . $tracks[$i]['track']['name'] . "\t" . json_encode($tracks[$i]['track']) . "\n", FILE_APPEND);
+					wish($trackid);
 				}
 				if (isset($tracks[$i]['track']['linked_from'])) {
 					$trackid = $tracks[$i]['track']['linked_from']['id'];
