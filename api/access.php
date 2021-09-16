@@ -160,7 +160,7 @@
 				if (($total > $offset + $l) and (($limit < 0) or ($limit > $l))) {
 					$newLimit = ($limit < 0) ? -1 : $limit - $l;
 					$newOffset = $offset + $l;
-					$rest = getPlaylist($username, $playlist, $newLimit, $newOffset);
+					$rest = getPlaylist($username, $playlist, $newLimit, $newOffset, $market);
 					return array_merge($tracks, $rest);
 				} else {
 					return $tracks;

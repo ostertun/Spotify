@@ -15,39 +15,34 @@
 	$unplayable = 0;
 	$linked = 0;
 	$duration = 0;
-	$offset = 0;
-	while (true) {
-		$tracks = getPlaylist(SP_USERNAME, PL_POOL, 100, $offset, true);
-		if (($tracks !== false) and (count($tracks) > 0)) {
-			for ($i = 0; $i < count($tracks); $i++) {
-				$duration += $tracks[$i]['track']['duration_ms'];
-				if ($tracks[$i]['track']['is_local']) {
-					$local++;
-					echo "Song #" . ($offset + $i + 1) . " is local<br>\n";
+	$tracks = getPlaylist(SP_USERNAME, PL_POOL, -1, 0, true);
+	if (($tracks !== false) and (count($tracks) > 0)) {
+		for ($i = 0; $i < count($tracks); $i++) {
+			$duration += $tracks[$i]['track']['duration_ms'];
+			if ($tracks[$i]['track']['is_local']) {
+				$local++;
+				echo "Song #" . ($offset + $i + 1) . " is local<br>\n";
+				echo $tracks[$i]['track']['name'] . "<br>\n<br>\n";
+			} elseif (!$tracks[$i]['track']['is_playable']) {
+				$unplayable++;
+				echo "Song #" . ($offset + $i + 1) . " is unplayable<br>\n";
+				echo $tracks[$i]['track']['name'] . "<br>\n";
+				if ($remove) {
+					if (spotify_remove(SP_USERNAME, PL_POOL, $tracks[$i]['track']['id']))
+						echo "Removed<br>\n";
+					else
+						echo "Can not remove<br>\n";
+				}
+				echo "<br>\n";
+			} elseif (isset($tracks[$i]['track']['linked_from'])) {
+				$linked++;
+				if ($showLinked) {
+					echo "Song #" . ($offset + $i + 1) . " is linked (" . $tracks[$i]['track']['linked_from']['id'] . " => " . $tracks[$i]['track']['id'] . ")<br>\n";
 					echo $tracks[$i]['track']['name'] . "<br>\n<br>\n";
-				} elseif (!$tracks[$i]['track']['is_playable']) {
-					$unplayable++;
-					echo "Song #" . ($offset + $i + 1) . " is unplayable<br>\n";
-					echo $tracks[$i]['track']['name'] . "<br>\n";
-					if ($remove) {
-						if (spotify_remove(SP_USERNAME, PL_POOL, $tracks[$i]['track']['id']))
-							echo "Removed<br>\n";
-						else
-							echo "Can not remove<br>\n";
-					}
-					echo "<br>\n";
-				} elseif (isset($tracks[$i]['track']['linked_from'])) {
-					$linked++;
-					if ($showLinked) {
-						echo "Song #" . ($offset + $i + 1) . " is linked (" . $tracks[$i]['track']['linked_from']['id'] . " => " . $tracks[$i]['track']['id'] . ")<br>\n";
-						echo $tracks[$i]['track']['name'] . "<br>\n<br>\n";
-					}
 				}
 			}
-			$offset += count($tracks);
-		} else {
-			break;
 		}
+		$offset += count($tracks);
 	}
 
 	$duration = floor($duration / 1000); $duration_s = $duration % 60;
